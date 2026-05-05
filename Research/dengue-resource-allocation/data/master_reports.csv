@@ -1,0 +1,17 @@
+report_id,date,gn_code,gn_name,source,source_record_type,confirmed_cases,suspected_cases,population,households,fogging_scheduled,environmental_complaints,stagnant_water_sites,breeding_sites,inspections_total,flagged_inspections,notes,latitude,longitude
+H-001,2026-04-25,CMB-GN-01,Kollupitiya,hospital,hospital_case_report,4,2,,,,,,,,,Cluster of fever cases reported from outpatient unit.,6.9142,79.8485
+H-002,2026-04-26,CMB-GN-02,Bambalapitiya,hospital,hospital_case_report,7,3,,,,,,,,,Increase in confirmed dengue cases from ward notifications.,6.8948,79.8558
+H-003,2026-04-27,CMB-GN-03,Wellawatte,hospital,hospital_case_report,5,4,,,,,,,,,Confirmed cases with recent travel within local area.,6.8756,79.8622
+H-004,2026-04-29,CMB-GN-02,Bambalapitiya,hospital,hospital_case_report,6,2,,,,,,,,,Repeat cluster from same GN on a later date.,6.8939,79.8547
+H-005,2026-05-01,CMB-GN-01,Kollupitiya,hospital,hospital_case_report,3,1,,,,,,,,,Moderate case count continuing in pilot area.,6.9152,79.8472
+DS-001,2026-04-25,CMB-GN-01,Kollupitiya,divisional_secretariat,population_profile,,,12800,3100,,,,,,,Official pilot GN baseline loaded for planning.,,
+DS-002,2026-04-25,CMB-GN-02,Bambalapitiya,divisional_secretariat,population_profile,,,15600,3800,,,,,,,Official pilot GN baseline loaded for planning.,,
+DS-003,2026-04-25,CMB-GN-03,Wellawatte,divisional_secretariat,population_profile,,,17400,4200,,,,,,,Official pilot GN baseline loaded for planning.,,
+UC-001,2026-04-26,CMB-GN-01,Kollupitiya,urban_council,urban_environment_report,,,,,1,5,2,,,,Complaints near lane drains and construction area.,6.9135,79.8489
+UC-002,2026-04-27,CMB-GN-02,Bambalapitiya,urban_council,urban_environment_report,,,,,1,8,4,,,,High complaint volume from residential blocks.,6.8941,79.8562
+UC-003,2026-04-28,CMB-GN-03,Wellawatte,urban_council,urban_environment_report,,,,,0,6,5,,,,Waste collection delay and stagnant water reported.,6.8748,79.8619
+UC-004,2026-04-30,CMB-GN-02,Bambalapitiya,urban_council,urban_environment_report,,,,,1,7,3,,,,Second round of complaints before weekend.,6.8935,79.8544
+GN-001,2026-04-26,CMB-GN-01,Kollupitiya,gn_local,local_inspection_report,,,,,,,,3,12,2,Containers and rooftop water collections identified.,6.9146,79.8477
+GN-002,2026-04-27,CMB-GN-02,Bambalapitiya,gn_local,local_inspection_report,,,,,,,,6,15,5,Multiple breeding spots in densely occupied housing cluster.,6.8943,79.8551
+GN-003,2026-04-28,CMB-GN-03,Wellawatte,gn_local,local_inspection_report,,,,,,,,5,14,4,Backyard and drain inspections flagged several premises.,6.8752,79.861
+GN-004,2026-05-01,CMB-GN-02,Bambalapitiya,gn_local,local_inspection_report,,,,,,,,4,10,3,Follow-up inspection found persistent breeding sites.,6.8937,79.8555

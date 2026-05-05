@@ -1,0 +1,4 @@
+gn_code,gn_name,city,population,households,centroid_lat,centroid_lon
+CMB-GN-01,Kollupitiya,Colombo,12800,3100,6.915,79.848
+CMB-GN-02,Bambalapitiya,Colombo,15600,3800,6.894,79.855
+CMB-GN-03,Wellawatte,Colombo,17400,4200,6.875,79.8615

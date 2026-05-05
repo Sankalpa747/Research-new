@@ -1,0 +1,5 @@
+report_id,date,gn_code,gn_name,source,source_record_type,breeding_sites,inspections_total,flagged_inspections,notes,latitude,longitude
+GN-001,2026-04-26,CMB-GN-01,Kollupitiya,gn_local,local_inspection_report,3,12,2,Containers and rooftop water collections identified.,6.9146,79.8477
+GN-002,2026-04-27,CMB-GN-02,Bambalapitiya,gn_local,local_inspection_report,6,15,5,Multiple breeding spots in densely occupied housing cluster.,6.8943,79.8551
+GN-003,2026-04-28,CMB-GN-03,Wellawatte,gn_local,local_inspection_report,5,14,4,Backyard and drain inspections flagged several premises.,6.8752,79.861
+GN-004,2026-05-01,CMB-GN-02,Bambalapitiya,gn_local,local_inspection_report,4,10,3,Follow-up inspection found persistent breeding sites.,6.8937,79.8555

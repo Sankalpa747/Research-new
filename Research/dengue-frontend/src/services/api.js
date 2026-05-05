@@ -110,6 +110,62 @@ export const adminAPI = {
   },
 };
 
+// ==================== PILOT STUDY ENDPOINTS ====================
+
+export const pilotAPI = {
+  // Get pilot configuration
+  getConfig: () => api.get('/pilot/config'),
+  
+  // Get pilot status and statistics
+  getStatus: () => api.get('/pilot/status'),
+  
+  // Check boundary files availability
+  getBoundaries: () => api.get('/pilot/boundaries'),
+  
+  // Get GN master list (full data)
+  getGNList: () => api.get('/pilot/gn-list'),
+  
+  // Get GN options for dropdowns (simplified)
+  getGNOptions: () => api.get('/pilot/gn-options'),
+
+  // Master Reports API
+  // Create master report (any source)
+  createMasterReport: (report) => api.post('/pilot/reports', report),
+  
+  // List master reports with filters
+  getMasterReports: (params = {}) => api.get('/pilot/reports', { params }),
+  
+  // Get specific master report
+  getMasterReport: (reportId) => api.get(`/pilot/reports/${reportId}`),
+  
+  // Update master report
+  updateMasterReport: (reportId, report) => api.put(`/pilot/reports/${reportId}`, report),
+  
+  // Delete master report
+  deleteMasterReport: (reportId) => api.delete(`/pilot/reports/${reportId}`),
+
+  // Source-specific report creation
+  createHospitalReport: (report) => api.post('/pilot/reports/hospital', report),
+  createDivisionalReport: (report) => api.post('/pilot/reports/divisional', report),
+  createUrbanCouncilReport: (report) => api.post('/pilot/reports/urban-council', report),
+  createGNLocalReport: (report) => api.post('/pilot/reports/gn-local', report),
+
+  // Pilot Hotspot API (GN-level hotspots)
+  getPilotHotspots: () => api.get('/pilot/hotspots'),
+  getPilotHotspotConfig: () => api.get('/pilot/hotspots/config'),
+
+  // Pilot Resource Allocation API (Rule-based allocation for GN areas)
+  getPilotResourceAllocation: () => api.get('/pilot/resource-allocation'),
+  getPilotResourceConfig: () => api.get('/pilot/resource-allocation/config'),
+
+  // Pilot Route Planning API (Route optimization for field operations)
+  getPilotRoutePlan: () => api.get('/pilot/route-plan'),
+  getPilotRouteConfig: () => api.get('/pilot/route-plan/config'),
+  
+  // Enhanced Route Planning API (Using routing service interface)
+  getEnhancedRoutePlan: () => api.get('/pilot/route-plan/enhanced'),
+};
+
 // ==================== HEALTH CHECK ====================
 
 export const healthAPI = {

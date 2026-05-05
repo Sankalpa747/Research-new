@@ -6,8 +6,16 @@ Handles all JSON-based persistence for the application
 import json
 from pathlib import Path
 from typing import Dict, List, Optional
-from datetime import datetime
+from datetime import datetime, date
 import threading
+
+
+class DateTimeEncoder(json.JSONEncoder):
+    """Custom JSON encoder that handles datetime and date objects"""
+    def default(self, obj):
+        if isinstance(obj, (datetime, date)):
+            return obj.isoformat()
+        return super().default(obj)
 
 
 class JSONStore:
@@ -32,7 +40,13 @@ class JSONStore:
                 "hotspots": [],
                 "resource_recommendations": [],
                 "resource_assignments": [],
-                "prediction_history": []
+                "prediction_history": [],
+                # New pilot study data sections
+                "master_reports": [],
+                "pilot_hospital_reports": [],
+                "pilot_divisional_reports": [],
+                "pilot_urban_council_reports": [],
+                "pilot_gn_local_reports": []
             }
             self._write_data(initial_data)
             print(f"Created new storage file at {self.storage_path}")
@@ -65,7 +79,7 @@ class JSONStore:
         
         # Write to file
         with open(self.storage_path, 'w') as f:
-            json.dump(data, f, indent=2)
+            json.dump(data, f, indent=2, cls=DateTimeEncoder)
     
     def _update_and_save(self, update_func):
         """Task 10: Ensure JSON consistency after every operation"""
@@ -211,7 +225,120 @@ class JSONStore:
         with self.lock:
             data = self._read_data()
             with open(export_path, 'w') as f:
-                json.dump(data, f, indent=2)
+                json.dump(data, f, indent=2, cls=DateTimeEncoder)
+
+    # Master Reports Management (Pilot Study)
+    
+    def save_master_report(self, report: Dict):
+        """Save a single master report"""
+        def update(data):
+            if "master_reports" not in data:
+                data["master_reports"] = []
+            
+            # Add timestamp if not present
+            if "created_at" not in report:
+                report["created_at"] = datetime.now().isoformat()
+            
+            # Check if report already exists (by report_id)
+            existing_index = None
+            for i, existing_report in enumerate(data["master_reports"]):
+                if existing_report.get("report_id") == report.get("report_id"):
+                    existing_index = i
+                    break
+            
+            if existing_index is not None:
+                # Update existing report
+                report["updated_at"] = datetime.now().isoformat()
+                data["master_reports"][existing_index] = report
+            else:
+                # Add new report
+                data["master_reports"].append(report)
+        
+        self._update_and_save(update)
+    
+    def get_master_reports(self, gn_code: Optional[str] = None, source: Optional[str] = None, 
+                          date_from: Optional[str] = None, date_to: Optional[str] = None) -> List[Dict]:
+        """Get master reports with optional filtering"""
+        with self.lock:
+            data = self._read_data()
+            reports = data.get("master_reports", [])
+            
+            # Apply filters
+            if gn_code:
+                reports = [r for r in reports if r.get("gn_code") == gn_code]
+            
+            if source:
+                reports = [r for r in reports if r.get("source") == source]
+            
+            if date_from:
+                reports = [r for r in reports if r.get("date", "") >= date_from]
+            
+            if date_to:
+                reports = [r for r in reports if r.get("date", "") <= date_to]
+            
+            # Sort by date (newest first)
+            reports.sort(key=lambda x: x.get("date", ""), reverse=True)
+            
+            return reports
+    
+    def get_master_report_by_id(self, report_id: str) -> Optional[Dict]:
+        """Get a specific master report by ID"""
+        with self.lock:
+            data = self._read_data()
+            reports = data.get("master_reports", [])
+            
+            for report in reports:
+                if report.get("report_id") == report_id:
+                    return report
+            
+            return None
+    
+    def delete_master_report(self, report_id: str) -> bool:
+        """Delete a master report by ID"""
+        deleted = False
+        
+        def update(data):
+            nonlocal deleted
+            if "master_reports" not in data:
+                return
+            
+            original_count = len(data["master_reports"])
+            data["master_reports"] = [r for r in data["master_reports"] 
+                                    if r.get("report_id") != report_id]
+            deleted = len(data["master_reports"]) < original_count
+        
+        self._update_and_save(update)
+        return deleted
+    
+    # Source-specific report storage (optional, for data entry form storage)
+    
+    def save_source_report(self, report: Dict, source_type: str):
+        """Save a source-specific report (hospital, divisional, etc.)"""
+        source_key = f"pilot_{source_type}_reports"
+        
+        def update(data):
+            if source_key not in data:
+                data[source_key] = []
+            
+            if "created_at" not in report:
+                report["created_at"] = datetime.now().isoformat()
+            
+            data[source_key].append(report)
+        
+        self._update_and_save(update)
+    
+    def get_source_reports(self, source_type: str, gn_code: Optional[str] = None) -> List[Dict]:
+        """Get source-specific reports"""
+        source_key = f"pilot_{source_type}_reports"
+        
+        with self.lock:
+            data = self._read_data()
+            reports = data.get(source_key, [])
+            
+            if gn_code:
+                reports = [r for r in reports if r.get("gn_code") == gn_code]
+            
+            return reports
 
 
 # Global store instance

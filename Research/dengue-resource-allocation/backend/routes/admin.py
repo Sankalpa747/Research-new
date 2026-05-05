@@ -6,9 +6,17 @@ Provides overview and comprehensive data for administrators
 from fastapi import APIRouter, HTTPException, status
 from typing import Dict, List
 import pandas as pd
+import csv
+import sys
+from pathlib import Path
+from datetime import datetime
 
-from backend.schemas import AdminOverview, HotspotInfo, PredictionSummary
+# Add parent directory to path for imports
+sys.path.insert(0, str(Path(__file__).parent.parent.parent))
+
+from backend.schemas import AdminOverview, HotspotInfo, PredictionSummary, SuccessResponse
 from backend.json_store import get_store
+from backend.config import DATA_DIR, STORAGE_PATH
 from backend.utils import (
     get_timestamp,
     calculate_prediction_summary,
@@ -334,4 +342,146 @@ async def health_check():
         raise HTTPException(
             status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
             detail=f"System health check failed: {str(e)}"
+        )
+
+
+@router.post("/import-sample-data", response_model=SuccessResponse)
+async def import_sample_data():
+    """
+    Import sample CSV data into the system
+    Protected admin endpoint for loading demonstration data
+    """
+    try:
+        store = get_store(str(STORAGE_PATH))
+        
+        # Track import statistics
+        import_stats = {
+            'master_reports': 0,
+            'skipped_duplicates': 0,
+            'errors': []
+        }
+        
+        # Check if master_reports.csv exists
+        csv_path = DATA_DIR / "master_reports.csv"
+        if not csv_path.exists():
+            raise HTTPException(
+                status_code=404,
+                detail=f"Sample data file not found: {csv_path}"
+            )
+        
+        # Get existing reports to check for duplicates
+        existing_reports = store.get_master_reports()
+        existing_ids = {report.get('report_id') for report in existing_reports}
+        
+        # Safe conversion functions
+        def safe_int(value: str):
+            if not value or value.strip() == '':
+                return None
+            try:
+                return int(float(value))
+            except (ValueError, TypeError):
+                return None
+        
+        def safe_float(value: str):
+            if not value or value.strip() == '':
+                return None
+            try:
+                return float(value)
+            except (ValueError, TypeError):
+                return None
+        
+        # Import master reports
+        with open(csv_path, 'r', encoding='utf-8') as csvfile:
+            reader = csv.DictReader(csvfile)
+            
+            for row in reader:
+                # Validate required fields
+                report_id = row.get('report_id', '').strip()
+                date = row.get('date', '').strip()
+                gn_code = row.get('gn_code', '').strip()
+                gn_name = row.get('gn_name', '').strip()
+                source = row.get('source', '').strip()
+                source_record_type = row.get('source_record_type', '').strip()
+                
+                if not all([report_id, date, gn_code, gn_name, source, source_record_type]):
+                    import_stats['errors'].append(f"Skipping incomplete report: {report_id}")
+                    continue
+                
+                # Check for duplicates (idempotent)
+                if report_id in existing_ids:
+                    import_stats['skipped_duplicates'] += 1
+                    continue
+                
+                # Build the report object
+                report = {
+                    'report_id': report_id,
+                    'date': date,
+                    'gn_code': gn_code,
+                    'gn_name': gn_name,
+                    'source': source,
+                    'source_record_type': source_record_type,
+                    'notes': row.get('notes', '').strip() or None,
+                    'latitude': safe_float(row.get('latitude')),
+                    'longitude': safe_float(row.get('longitude')),
+                    'created_at': datetime.now().isoformat(),
+                    'updated_at': datetime.now().isoformat()
+                }
+                
+                # Add source-specific fields
+                if source == 'hospital':
+                    report.update({
+                        'confirmed_cases': safe_int(row.get('confirmed_cases')),
+                        'suspected_cases': safe_int(row.get('suspected_cases')),
+                    })
+                elif source == 'divisional_secretariat':
+                    report.update({
+                        'population': safe_int(row.get('population')),
+                        'households': safe_int(row.get('households')),
+                    })
+                elif source == 'urban_council':
+                    report.update({
+                        'fogging_scheduled': safe_int(row.get('fogging_scheduled')),
+                        'environmental_complaints': safe_int(row.get('environmental_complaints')),
+                        'stagnant_water_sites': safe_int(row.get('stagnant_water_sites')),
+                    })
+                elif source == 'gn_local':
+                    report.update({
+                        'breeding_sites': safe_int(row.get('breeding_sites')),
+                        'inspections_total': safe_int(row.get('inspections_total')),
+                        'flagged_inspections': safe_int(row.get('flagged_inspections')),
+                    })
+                
+                # Save to store
+                try:
+                    store.save_master_report(report)
+                    import_stats['master_reports'] += 1
+                    existing_ids.add(report_id)
+                except Exception as e:
+                    import_stats['errors'].append(f"Error saving report {report_id}: {str(e)}")
+        
+        # Prepare response message
+        if import_stats['errors']:
+            message = f"Import completed with {len(import_stats['errors'])} errors. "
+        else:
+            message = "Sample data imported successfully! "
+            
+        message += f"Added {import_stats['master_reports']} new reports, "
+        message += f"skipped {import_stats['skipped_duplicates']} duplicates."
+        
+        return SuccessResponse(
+            status="success",
+            message=message,
+            data={
+                "import_stats": import_stats,
+                "total_reports_after_import": len(store.get_master_reports())
+            },
+            timestamp=datetime.now().isoformat()
+        )
+        
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Failed to import sample data: {str(e)}"
         )

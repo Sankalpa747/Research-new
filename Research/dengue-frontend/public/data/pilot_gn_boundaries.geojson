@@ -1,0 +1,113 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "gn_code": "CMB-GN-01",
+        "gn_name": "Kollupitiya",
+        "city": "Colombo",
+        "is_synthetic_boundary": true
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              79.842,
+              6.919
+            ],
+            [
+              79.852,
+              6.919
+            ],
+            [
+              79.852,
+              6.91
+            ],
+            [
+              79.842,
+              6.91
+            ],
+            [
+              79.842,
+              6.919
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "gn_code": "CMB-GN-02",
+        "gn_name": "Bambalapitiya",
+        "city": "Colombo",
+        "is_synthetic_boundary": true
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              79.8495,
+              6.899
+            ],
+            [
+              79.8605,
+              6.899
+            ],
+            [
+              79.8605,
+              6.889
+            ],
+            [
+              79.8495,
+              6.889
+            ],
+            [
+              79.8495,
+              6.899
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "gn_code": "CMB-GN-03",
+        "gn_name": "Wellawatte",
+        "city": "Colombo",
+        "is_synthetic_boundary": true
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              79.856,
+              6.88
+            ],
+            [
+              79.868,
+              6.88
+            ],
+            [
+              79.868,
+              6.87
+            ],
+            [
+              79.856,
+              6.87
+            ],
+            [
+              79.856,
+              6.88
+            ]
+          ]
+        ]
+      }
+    }
+  ]
+}

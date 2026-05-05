@@ -5,15 +5,54 @@ import {
   AlertTriangle, 
   TrendingUp, 
   Settings,
-  X
+  Map,
+  X,
+  Building2,
+  Building,
+  MapPin,
+  Search,
+  FileText,
+  Users,
+  FlaskConical,
+  Navigation,
+  Activity
 } from 'lucide-react';
 
-const navItems = [
-  { path: '/', icon: LayoutDashboard, label: 'Dashboard' },
-  { path: '/resources', icon: Package, label: 'Resources' },
-  { path: '/hotspots', icon: AlertTriangle, label: 'Hotspots' },
-  { path: '/predictions', icon: TrendingUp, label: 'Predictions' },
-  { path: '/admin', icon: Settings, label: 'Admin' },
+const navSections = [
+  {
+    title: 'Overview',
+    items: [
+      { path: '/', icon: LayoutDashboard, label: 'Dashboard' },
+      { path: '/resources', icon: Package, label: 'Resources' },
+      { path: '/hotspots', icon: AlertTriangle, label: 'Hotspots' },
+      { path: '/map', icon: Map, label: 'Map View' },
+      { path: '/predictions', icon: TrendingUp, label: 'Predictions' },
+    ]
+  },
+  {
+    title: 'Data Entry',
+    items: [
+      { path: '/reports', icon: FileText, label: 'All Reports' },
+      { path: '/reports/hospital', icon: Building2, label: 'Hospital Reports' },
+      { path: '/reports/divisional', icon: Building, label: 'Divisional Secretariat' },
+      { path: '/reports/urban-council', icon: MapPin, label: 'Urban Council' },
+      { path: '/reports/gn-local', icon: Search, label: 'GN Local Inspections' },
+    ]
+  },
+  {
+    title: 'Pilot Operations',
+    items: [
+      { path: '/pilot/dashboard', icon: Activity, label: 'Pilot Dashboard' },
+      { path: '/pilot/resource-allocation', icon: Users, label: 'Resource Allocation' },
+      { path: '/pilot/route-planning', icon: Navigation, label: 'Route Planning' },
+    ]
+  },
+  {
+    title: 'System',
+    items: [
+      { path: '/admin', icon: Settings, label: 'Admin' },
+    ]
+  }
 ];
 
 const Sidebar = ({ isOpen, onClose }) => {
@@ -34,23 +73,32 @@ const Sidebar = ({ isOpen, onClose }) => {
             </div>
           </div>
 
-          <nav className="flex-1 px-4 py-4 space-y-1 overflow-y-auto">
-            {navItems.map((item) => (
-              <NavLink
-                key={item.path}
-                to={item.path}
-                end={item.path === '/'}
-                className={({ isActive }) =>
-                  `flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${
-                    isActive
-                      ? 'bg-blue-50 text-blue-600 font-medium'
-                      : 'text-gray-700 hover:bg-gray-50'
-                  }`
-                }
-              >
-                <item.icon className="w-5 h-5" />
-                <span>{item.label}</span>
-              </NavLink>
+          <nav className="flex-1 px-4 py-4 overflow-y-auto">
+            {navSections.map((section) => (
+              <div key={section.title} className="mb-6">
+                <h3 className="px-4 mb-2 text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                  {section.title}
+                </h3>
+                <div className="space-y-1">
+                  {section.items.map((item) => (
+                    <NavLink
+                      key={item.path}
+                      to={item.path}
+                      end={item.path === '/'}
+                      className={({ isActive }) =>
+                        `flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${
+                          isActive
+                            ? 'bg-blue-50 text-blue-600 font-medium'
+                            : 'text-gray-700 hover:bg-gray-50'
+                        }`
+                      }
+                    >
+                      <item.icon className="w-5 h-5" />
+                      <span>{item.label}</span>
+                    </NavLink>
+                  ))}
+                </div>
+              </div>
             ))}
           </nav>
 
@@ -92,24 +140,33 @@ const Sidebar = ({ isOpen, onClose }) => {
             </button>
           </div>
 
-          <nav className="flex-1 px-4 py-4 space-y-1 overflow-y-auto">
-            {navItems.map((item) => (
-              <NavLink
-                key={item.path}
-                to={item.path}
-                end={item.path === '/'}
-                onClick={onClose}
-                className={({ isActive }) =>
-                  `flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${
-                    isActive
-                      ? 'bg-blue-50 text-blue-600 font-medium'
-                      : 'text-gray-700 hover:bg-gray-50'
-                  }`
-                }
-              >
-                <item.icon className="w-5 h-5" />
-                <span>{item.label}</span>
-              </NavLink>
+          <nav className="flex-1 px-4 py-4 overflow-y-auto">
+            {navSections.map((section) => (
+              <div key={section.title} className="mb-6">
+                <h3 className="px-4 mb-2 text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                  {section.title}
+                </h3>
+                <div className="space-y-1">
+                  {section.items.map((item) => (
+                    <NavLink
+                      key={item.path}
+                      to={item.path}
+                      end={item.path === '/'}
+                      onClick={onClose}
+                      className={({ isActive }) =>
+                        `flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${
+                          isActive
+                            ? 'bg-blue-50 text-blue-600 font-medium'
+                            : 'text-gray-700 hover:bg-gray-50'
+                        }`
+                      }
+                    >
+                      <item.icon className="w-5 h-5" />
+                      <span>{item.label}</span>
+                    </NavLink>
+                  ))}
+                </div>
+              </div>
             ))}
           </nav>
         </div>

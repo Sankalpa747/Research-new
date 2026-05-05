@@ -1,0 +1,37 @@
+{
+  "city": "Colombo",
+  "study_area_type": "pilot",
+  "pilot_gns": [
+    {
+      "gn_code": "CMB-GN-01",
+      "gn_name": "Kollupitiya"
+    },
+    {
+      "gn_code": "CMB-GN-02",
+      "gn_name": "Bambalapitiya"
+    },
+    {
+      "gn_code": "CMB-GN-03",
+      "gn_name": "Wellawatte"
+    }
+  ],
+  "depot": {
+    "depot_id": "DEPOT-01",
+    "name": "Colombo MOH / Urban Council Pilot Depot",
+    "latitude": 6.8916,
+    "longitude": 79.8574
+  },
+  "resource_constraints": {
+    "fogging_teams_per_day": 2,
+    "inspection_teams_per_day": 3,
+    "max_work_hours_per_team": 8
+  },
+  "hotspot_weights": {
+    "confirmed_cases": 5,
+    "breeding_sites": 3,
+    "environmental_complaints": 2,
+    "flagged_inspections": 2,
+    "population_divisor": 1000
+  },
+  "notes": "All data and boundaries in this package are synthetic demo data for implementation/testing only. Replace with official GN list and official boundary files later."
+}

@@ -1,0 +1,4 @@
+gn_code,gn_name,confirmed_cases,breeding_sites,environmental_complaints,flagged_inspections,population,risk_score,priority_rank,risk_level
+CMB-GN-02,Bambalapitiya,13.0,10.0,15.0,8.0,15600.0,141.0,1,High
+CMB-GN-03,Wellawatte,5.0,5.0,6.0,4.0,17400.0,60.0,2,Medium
+CMB-GN-01,Kollupitiya,7.0,3.0,5.0,2.0,12800.0,58.0,3,Medium

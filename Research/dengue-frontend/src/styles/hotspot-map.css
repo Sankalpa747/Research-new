@@ -1,0 +1,101 @@
+/* Hotspot Map Styles */
+
+/* Custom popup styling */
+.hotspot-popup .leaflet-popup-content-wrapper {
+  border-radius: 8px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.hotspot-popup .leaflet-popup-content {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+.hotspot-popup .leaflet-popup-tip {
+  background: white;
+}
+
+/* Legend positioning */
+.hotspot-legend {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  z-index: 1000;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  padding: 16px;
+  min-width: 280px;
+}
+
+/* Map container enhancements */
+.map-container {
+  position: relative;
+}
+
+.map-container .leaflet-container {
+  border-radius: 8px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .hotspot-legend {
+    position: static;
+    margin-top: 16px;
+    min-width: auto;
+  }
+  
+  .hotspot-popup .leaflet-popup-content {
+    font-size: 12px;
+  }
+}
+
+/* Animation for risk level indicators */
+.risk-indicator {
+  transition: all 0.3s ease;
+}
+
+.risk-indicator:hover {
+  transform: scale(1.05);
+}
+
+/* Polygon hover effects enhancement */
+.leaflet-interactive:hover {
+  transition: all 0.2s ease;
+}
+
+/* Loading state for map */
+.map-loading-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  border-radius: 8px;
+}
+
+.map-loading-spinner {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #6B7280;
+  font-size: 14px;
+}
+
+/* Risk level color utilities */
+.risk-high {
+  color: #DC2626;
+}
+
+.risk-medium {
+  color: #D97706;
+}
+
+.risk-low {
+  color: #059669;
+}

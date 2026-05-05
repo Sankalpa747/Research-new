@@ -1,0 +1,5 @@
+report_id,date,gn_code,gn_name,source,source_record_type,fogging_scheduled,environmental_complaints,stagnant_water_sites,notes,latitude,longitude
+UC-001,2026-04-26,CMB-GN-01,Kollupitiya,urban_council,urban_environment_report,1,5,2,Complaints near lane drains and construction area.,6.9135,79.8489
+UC-002,2026-04-27,CMB-GN-02,Bambalapitiya,urban_council,urban_environment_report,1,8,4,High complaint volume from residential blocks.,6.8941,79.8562
+UC-003,2026-04-28,CMB-GN-03,Wellawatte,urban_council,urban_environment_report,0,6,5,Waste collection delay and stagnant water reported.,6.8748,79.8619
+UC-004,2026-04-30,CMB-GN-02,Bambalapitiya,urban_council,urban_environment_report,1,7,3,Second round of complaints before weekend.,6.8935,79.8544

@@ -1,0 +1,6 @@
+report_id,date,gn_code,gn_name,source,source_record_type,confirmed_cases,suspected_cases,notes,latitude,longitude
+H-001,2026-04-25,CMB-GN-01,Kollupitiya,hospital,hospital_case_report,4,2,Cluster of fever cases reported from outpatient unit.,6.9142,79.8485
+H-002,2026-04-26,CMB-GN-02,Bambalapitiya,hospital,hospital_case_report,7,3,Increase in confirmed dengue cases from ward notifications.,6.8948,79.8558
+H-003,2026-04-27,CMB-GN-03,Wellawatte,hospital,hospital_case_report,5,4,Confirmed cases with recent travel within local area.,6.8756,79.8622
+H-004,2026-04-29,CMB-GN-02,Bambalapitiya,hospital,hospital_case_report,6,2,Repeat cluster from same GN on a later date.,6.8939,79.8547
+H-005,2026-05-01,CMB-GN-01,Kollupitiya,hospital,hospital_case_report,3,1,Moderate case count continuing in pilot area.,6.9152,79.8472
